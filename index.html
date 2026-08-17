@@ -2,7 +2,7 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Soil Nutrient & Fertilizer Recommendation Map</title>
     
     <!-- Leaflet CSS -->
@@ -16,6 +16,30 @@
         <div id="sidebar-left" class="sidebar">
             <h2 id="selected-area-title">Soil nutrient and FR Map</h2>
             
+            <!-- Upazila, Union & Mauza Selection -->
+            <div class="control-group">
+                <label for="upazilaSelect">Select Upazila/Thana:</label>
+                <select id="upazilaSelect">
+                    <option value="">-- Select Upazila --</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="unionSelect">Select Union:</label>
+                <select id="unionSelect" disabled>
+                    <option value="">-- Select Union --</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="mauzaSelect">Select Mauza:</label>
+                <select id="mauzaSelect" disabled>
+                    <option value="">-- Select Mauza --</option>
+                </select>
+            </div>
+
+            <hr>
+
             <div class="control-group">
                 <label for="layerSelect">Nutrient Layer:</label>
                 <select id="layerSelect">
@@ -43,7 +67,7 @@
 
             <h3>Location Info</h3>
             <table id="propsTable" class="data-table">
-                <tr><td colspan="2" style="text-align:center; color:#888;">Select a mauza on map</td></tr>
+                <tr><td colspan="2" style="text-align:center; color:#888;">Select a mauza on map or dropdown</td></tr>
             </table>
 
             <hr>
@@ -65,13 +89,14 @@
                 <label for="cropCategorySelect">Crop Category:</label>
                 <select id="cropCategorySelect">
                     <option value="">-- Select Category --</option>
-                    <option value="grains">Grains</option>
-                    <option value="vegetables">Vegetables</option>
-                    <option value="pulses">Pulses</option>
-                    <option value="oils">Oilseeds</option>
-                    <option value="fibers">Fibers</option>
-                    <option value="fruits">Fruits</option>
-                    <option value="flowers">Flowers</option>
+                    <option value="grains">Grains (দানাদার ফসল)</option>
+                    <option value="vegetables">Vegetables (শাকসবজি)</option>
+                    <option value="pulses">Pulses (ডাল জাতীয়)</option>
+                    <option value="oils">Oilseeds (তৈলবীজ)</option>
+                    <option value="fibers">Fibers (আঁশ জাতীয়)</option>
+                    <option value="spices">Spices (মসলা জাতীয়)</option>
+                    <option value="fruits">Fruits (ফলমূল)</option>
+                    <option value="cash_flowers">Flowers & Cash Crops (ফুল ও অন্যান্য)</option>
                 </select>
             </div>
 
