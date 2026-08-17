@@ -17,7 +17,7 @@ let currentLayerKey = null;
 let geojsonData = null;
 let geojsonLayer = null;
 let activeChartInstance = null;
-let selectedFeature = null; // Full feature object
+let selectedFeature = null;
 let legendControl = null;
 let layerMap = new Map();
 
@@ -110,7 +110,6 @@ const nutrientRanges = {
     ]
 };
 
-// Comprehensive Crops List
 const cropCategories = {
     grains: [
         { id: 'boro_hyv', name: 'Boro Rice (HYV / উফশী বোরো)', N: 160, P: 25, K: 80, S: 15, Zn: 3, B: 1 },
@@ -214,18 +213,15 @@ function getMauzaName(props) {
     return getPropValueByName(props, ['mauzname', 'mauza_name', 'mauza', 'mauz_name']) || 'Unknown Mauza';
 }
 
-// Mauza Area Calculation & Extraction
 function getMauzaArea(feature) {
     if (!feature || !feature.properties) return 'N/A';
     const props = feature.properties;
     
-    // Check property attributes for Area
     const areaVal = getPropValueByName(props, ['area_acre', 'area', 'shape_area', 'area_ha', 'area_sqkm', 'acre', 'hectare']);
     if (areaVal !== null && !isNaN(parseFloat(areaVal)) && parseFloat(areaVal) > 0) {
         return `${parseFloat(areaVal).toFixed(2)} Acre`;
     }
 
-    // Geodesic Polygon Area Calculation fallback
     try {
         if (feature.geometry) {
             const layer = L.geoJSON(feature);
@@ -547,60 +543,41 @@ function updateSidebarTable(feature) {
     `;
 }
 
-// Chart Fix: Always shows chart on dropdown or click
+// Chart Logic: Keeps the chart area empty unless both a feature & layer are explicitly selected
 function updateSidebarChart() {
     const ctx = document.getElementById('sidebarChart');
-    if (!ctx || !selectedFeature) return;
+    if (!ctx) return;
 
     if (activeChartInstance) {
         activeChartInstance.destroy();
+        activeChartInstance = null;
     }
 
-    if (currentLayerKey) {
-        // Single Nutrient Comparison
-        const oldVal = getFeatureValue(selectedFeature, currentLayerKey, 'old') || 0;
-        const newVal = getFeatureValue(selectedFeature, currentLayerKey, 'new') || 0;
-
-        activeChartInstance = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Old Map', 'New Map'],
-                datasets: [{
-                    label: currentLayerKey,
-                    data: [oldVal, newVal],
-                    backgroundColor: ['#e74c3c', '#27ae60']
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { y: { beginAtZero: true } }
-            }
-        });
-    } else {
-        // Multi-nutrient Comparison Overview when no layer is explicitly selected
-        const keyNutrients = ['Nitrogen', 'Phosphorus', 'Potassium', 'pH', 'OM'];
-        const oldVals = keyNutrients.map(n => getFeatureValue(selectedFeature, n, 'old') || 0);
-        const newVals = keyNutrients.map(n => getFeatureValue(selectedFeature, n, 'new') || 0);
-
-        activeChartInstance = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['N', 'P', 'K', 'pH', 'OM'],
-                datasets: [
-                    { label: 'Old Map', data: oldVals, backgroundColor: '#e74c3c' },
-                    { label: 'New Map', data: newVals, backgroundColor: '#27ae60' }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: true, position: 'top' } },
-                scales: { y: { beginAtZero: true } }
-            }
-        });
+    // Default state or if no feature/layer selected -> stay completely empty
+    if (!selectedFeature || !currentLayerKey) {
+        return;
     }
+
+    const oldVal = getFeatureValue(selectedFeature, currentLayerKey, 'old') || 0;
+    const newVal = getFeatureValue(selectedFeature, currentLayerKey, 'new') || 0;
+
+    activeChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Old Map', 'New Map'],
+            datasets: [{
+                label: currentLayerKey,
+                data: [oldVal, newVal],
+                backgroundColor: ['#e74c3c', '#27ae60']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
 }
 
 function renderLayer() {
@@ -654,7 +631,7 @@ document.addEventListener("DOMContentLoaded", function () {
         layerSelect.addEventListener('change', function(e) {
             currentLayerKey = e.target.value;
             renderLayer();
-            updateSidebarChart(); // Re-render chart on layer change
+            updateSidebarChart();
         });
     }
 
