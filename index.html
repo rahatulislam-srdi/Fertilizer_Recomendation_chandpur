@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Soil Nutrient & Fertilizer Recommendation Map</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <div id="app-container">
+        <!-- Left Sidebar: Map Controls & Location Info -->
+        <div id="sidebar-left" class="sidebar">
+            <h2 id="selected-area-title">Soil nutrient and FR Map</h2>
+            
+            <div class="control-group">
+                <label for="layerSelect">Nutrient Layer:</label>
+                <select id="layerSelect">
+                    <option value="">-- Select Attribute --</option>
+                    <option value="pH">pH</option>
+                    <option value="OM">Organic Matter (OM)</option>
+                    <option value="Nitrogen">Nitrogen (N)</option>
+                    <option value="Phosphorus">Phosphorus (P)</option>
+                    <option value="Potassium">Potassium (K)</option>
+                    <option value="Sulphur">Sulphur (S)</option>
+                    <option value="Zinc">Zinc (Zn)</option>
+                    <option value="Boron">Boron (B)</option>
+                    <option value="Calcium">Calcium (Ca)</option>
+                    <option value="Magnesium">Magnesium (Mg)</option>
+                    <option value="Texture">Soil Texture</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <button id="shiftBtn">Shift to NEW Map</button>
+                <span id="modeBadge" class="status-badge old-badge">Showing: OLD MAP</span>
+            </div>
+
+            <hr>
+
+            <h3>Location Info</h3>
+            <table id="propsTable" class="data-table">
+                <tr><td colspan="2" style="text-align:center; color:#888;">Select a mauza on map</td></tr>
+            </table>
+
+            <hr>
+
+            <h3>Nutrient Comparison</h3>
+            <div class="chart-container">
+                <canvas id="sidebarChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Center Map Container -->
+        <div id="map"></div>
+
+        <!-- Right Sidebar: Fertilizer Recommendation -->
+        <div id="sidebar-right" class="sidebar">
+            <h3>Fertilizer Recommendation</h3>
+            
+            <div class="control-group">
+                <label for="cropCategorySelect">Crop Category:</label>
+                <select id="cropCategorySelect">
+                    <option value="">-- Select Category --</option>
+                    <option value="grains">Grains</option>
+                    <option value="vegetables">Vegetables</option>
+                    <option value="pulses">Pulses</option>
+                    <option value="oils">Oilseeds</option>
+                    <option value="fibers">Fibers</option>
+                    <option value="fruits">Fruits</option>
+                    <option value="flowers">Flowers</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="cropSelect">Crop Name:</label>
+                <select id="cropSelect" disabled>
+                    <option value="">-- Select Crop --</option>
+                </select>
+            </div>
+
+            <table id="fertTable" class="data-table">
+                <tr><td colspan="2" style="text-align:center; color:#888;">Select crop category & crop</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Leaflet JS & Chart.js -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
