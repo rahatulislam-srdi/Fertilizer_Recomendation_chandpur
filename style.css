@@ -1,11 +1,16 @@
+* {
+    box-sizing: border-box;
+}
+
 html, body {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f7f6;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
 }
 
 #app-container {
@@ -13,75 +18,103 @@ html, body {
     flex-direction: row;
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
 }
 
-/* Sidebars Base Styling */
 .sidebar {
-    width: 300px;
+    width: 320px;
+    flex-shrink: 0;
     height: 100%;
     background: #ffffff;
     z-index: 1000;
     overflow-y: auto;
-    padding: 15px;
-    box-sizing: border-box;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 #sidebar-left {
-    box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+    border-right: 1px solid #e2e8f0;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.05);
 }
 
 #sidebar-right {
-    box-shadow: -2px 0 8px rgba(0,0,0,0.15);
+    border-left: 1px solid #e2e8f0;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.05);
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
 }
 
 #map {
     flex: 1;
-    width: 100%;
+    min-width: 0;
     height: 100%;
-}
-
-/* UI Elements */
-h2, h3 {
-    margin-top: 5px;
-    margin-bottom: 10px;
-    color: #2c3e50;
-    font-size: 16px;
+    z-index: 1;
 }
 
 h2 {
-    font-size: 18px;
-    border-bottom: 2px solid #27ae60;
-    padding-bottom: 5px;
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e293b;
+    border-bottom: 3px solid #27ae60;
+    padding-bottom: 6px;
+}
+
+h3 {
+    margin: 6px 0 2px 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: #475569;
+    text-transform: uppercase;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 4px 0;
 }
 
 .control-group {
-    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
 }
 
 .control-group label {
-    display: block;
-    font-size: 13px;
-    font-weight: bold;
-    margin-bottom: 4px;
-    color: #34495e;
+    font-size: 12px;
+    font-weight: 600;
+    color: #475569;
 }
 
 select, button {
     width: 100%;
     padding: 8px 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
     font-size: 13px;
-    box-sizing: border-box;
+    outline: none;
+    background-color: #ffffff;
+}
+
+select:focus {
+    border-color: #27ae60;
 }
 
 button {
     background-color: #27ae60;
-    color: white;
-    font-weight: bold;
+    color: #ffffff;
+    font-weight: 600;
     border: none;
     cursor: pointer;
-    transition: background 0.2s ease;
 }
 
 button:hover {
@@ -90,104 +123,100 @@ button:hover {
 
 .status-badge {
     display: inline-block;
-    margin-top: 6px;
+    margin-top: 4px;
     padding: 4px 8px;
     font-size: 11px;
-    font-weight: bold;
+    font-weight: 700;
     border-radius: 4px;
+    text-align: center;
 }
 
-.old-badge { background: #e74c3c; color: white; }
-.new-badge { background: #2980b9; color: white; }
+.old-badge { background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+.new-badge { background-color: #e0f2fe; color: #075985; border: 1px solid #7dd3fc; }
 
 .data-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 5px;
     font-size: 13px;
+    background: #ffffff;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
 }
 
 .data-table td {
     padding: 6px 8px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
 }
 
-.data-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
+.data-table tr:nth-child(even) { background-color: #f8fafc; }
 
 .chart-container {
     position: relative;
     height: 160px;
     width: 100%;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 4px;
 }
 
-/* Leaflet Legend & North Arrow */
 .legend {
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
     padding: 10px;
     line-height: 18px;
-    color: #333;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
     font-size: 12px;
 }
 
-.legend h4 { margin: 0 0 5px; }
-
-.legend-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 3px;
-}
-
-.legend-color {
-    width: 16px;
-    height: 16px;
-    margin-right: 8px;
-    display: inline-block;
-    border-radius: 2px;
-}
+.legend-item { display: flex; align-items: center; margin-bottom: 3px; }
+.legend-color { width: 14px; height: 14px; margin-right: 8px; border-radius: 3px; }
 
 .north-arrow-control {
-    background: white;
-    padding: 5px 8px;
-    border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 6px 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
     text-align: center;
-    font-weight: bold;
 }
 
-.north-arrow-icon { font-size: 16px; display: block; }
-.north-text { font-size: 10px; }
-
-/* Mobile & Tablet Responsive Design */
 @media screen and (max-width: 768px) {
+    html, body {
+        overflow-y: auto;
+        height: auto;
+    }
+
     #app-container {
         flex-direction: column;
-        overflow-y: auto;
+        height: auto;
+        overflow-y: visible;
     }
 
     .sidebar {
         width: 100%;
         height: auto;
-        max-height: 40vh;
-    }
-
-    #map {
-        height: 50vh;
-        min-height: 300px;
+        max-height: none;
+        overflow: visible;
+        box-shadow: none;
+        padding: 12px;
     }
 
     #sidebar-left {
         order: 1;
-    }
-
-    #map {
-        order: 2;
+        border-bottom: 2px solid #e2e8f0;
     }
 
     #sidebar-right {
+        order: 2;
+        border-bottom: 2px solid #e2e8f0;
+        border-top: none;
+    }
+
+    #map {
         order: 3;
+        height: 260px;
+        min-height: 260px;
+        width: 100%;
     }
 }
